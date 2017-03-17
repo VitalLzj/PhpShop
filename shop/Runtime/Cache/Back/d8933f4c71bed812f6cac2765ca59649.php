@@ -6,6 +6,9 @@
     <title>会员列表</title>
 
     <link href="<?php echo (C("BACK_CSS_URL")); ?>mine.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="<?php echo (C("COMMON_URL")); ?>Js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="<?php echo (C("LAYER_URL")); ?>layer.js"></script>
+
 </head>
 <body>
 <style>
@@ -45,18 +48,39 @@
             <!--<td>图片</td>-->
             <!--<td>缩略图</td>-->
             <!--<td>品牌</td>-->
-            <td>创建时间</td>
+            <td>商品图片</td>
             <td align="center">操作</td>
         </tr>
-        <?php if(is_array($info)): foreach($info as $key=>$v): ?><tr id="product1">
+        <?php if(is_array($info)): foreach($info as $key=>$v): ?><tr id="product<?php echo ($v["goods_id"]); ?>">
                 <td><?php echo ($v["goods_id"]); ?></td>
                 <td><a href="#"><?php echo ($v["goods_name"]); ?></a></td>
                 <td><?php echo ($v["goods_price"]); ?></td>
                 <td><?php echo (htmlspecialchars_decode($v["goods_introduce"])); ?></td>
-                <td><?php echo ($v["add_time"]); ?></td>
-                <td><a href="/shop/index.php/Back/Goods/updateGood">修改</a></td>
-                <td><a href="javascript:;" onclick="delete_product(1)">删除</a></td>
+                <td><img src="<?php echo (C("SHOP_URL")); echo ($v["goods_big_small"]); ?>" alt="暂无图片"/></td>
+                <td><a href="/shop/index.php/Back/Goods/updateGood/goods_id/<?php echo ($v["goods_id"]); ?>">修改</a></td>
+                <td><a onclick="delete_good(<?php echo ($v["goods_id"]); ?>)" style="cursor: pointer">删除</a></td>
             </tr><?php endforeach; endif; ?>
+        <script type="text/javascript">
+            function delete_good(good_id) {
+
+                layer.confirm('您真的要删除么？', {
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    $.ajax(
+                        {
+                            url: "<?php echo U('delGood');?>",
+                            data: {'goods_id': good_id},
+                            type: "get",
+                            success: function (msg) {
+                                $('#product' + good_id).remove();
+                                layer.msg('删除成功', {icon: 1});
+                            }
+                        }
+                    );
+                });
+
+            }
+        </script>
         <!--<tr id="product2">-->
         <!--<td>2</td>-->
         <!--<td><a href="#">苹果（APPLE）iPhone 4</a></td>-->
@@ -95,7 +119,7 @@
         <!--</tr>-->
         <tr>
             <td colspan="20" style="text-align: center;">
-                [1]
+                <?php echo ($pagelist); ?>
             </td>
         </tr>
         </tbody>

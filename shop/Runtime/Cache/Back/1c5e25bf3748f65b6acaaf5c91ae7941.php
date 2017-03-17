@@ -1,76 +1,66 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-    <head>
-        <title>修改商品</title>
-        <meta http-equiv="content-type" content="text/html;charset=utf-8">
-        <link href="<?php echo (C("BACK_CSS_URL")); ?>mine.css" type="text/css" rel="stylesheet">
-    </head>
+<head>
+    <title>修改商品</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link href="<?php echo (C("BACK_CSS_URL")); ?>mine.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8" src="<?php echo (C("PLUGIN_URL")); ?>/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="<?php echo (C("PLUGIN_URL")); ?>/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" charset="utf-8"
+            src="<?php echo (C("PLUGIN_URL")); ?>/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
 
-    <body>
+<body>
 
-        <div class="div_head">
+<div class="div_head">
             <span>
                 <span style="float:left">当前位置是：商品管理-》修改商品信息</span>
                 <span style="float:right;margin-right: 8px;font-weight: bold">
-                    <a style="text-decoration: none" href="./admin.php?c=goods&a=showlist">【返回】</a>
+                    <a style="text-decoration: none" href="/shop/index.php/Back/Goods/showGoods">【返回】</a>
                 </span>
             </span>
-        </div>
-        <div></div>
+</div>
+<div></div>
 
-        <div style="font-size: 13px;margin: 10px 5px">
-            <form action="./admin.php?c=goods&a=add" method="post" enctype="multipart/form-data">
-            <table border="1" width="100%" class="table_a">
-                <tr>
-                    <td>商品名称</td>
-                    <td><input type="text" name="f_goods_name" value="KD877" /></td>
-                </tr>
-                <tr>
-                    <td>商品分类</td>
-                    <td>
-                        <select name="f_goods_category_id">
-                            <option>请选择</option>
-                            <option>家用电器</option>
-                            <option>手机数码</option>
-                            <option>电脑办公</option>
-                            <option>服饰鞋帽</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>商品品牌</td>
-                    <td>
-                        <select name="f_goods_brand_id">
-                            <option>请选择</option>
-                            <option>苹果</option>
-                            <option>诺基亚</option>
-                            <option>HTC</option>
-                            <option>摩托罗拉</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>商品价格</td>
-                    <td><input type="text" name="f_goods_price" value="1239.99" /></td>
-                </tr>
-                <tr>
-                    <td>商品图片</td>
-                    <td><input type="file" name="f_goods_image" value="<?php echo (C("BACK_IMG_URL")); ?>2013-12-33.jpg" /></td>
-                </tr>
-                <tr>
-                    <td>商品详细描述</td>
-                    <td>
-                        <textarea name="f_goods_introduce">卓越的纤薄设计，却依然为更大的显示屏和更快的芯片预留了空间。超快无线网络连接也不会牺牲电池使用时间。全新耳机带来绝佳音效和非凡贴合的舒适度。如此众多的精彩功能融入这款 iPhone，如此，你才可以享受它的精彩更多。</textarea>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="submit" value="修改">
-                    </td>
-                </tr>  
-            </table>
-            </form>
-        </div>
-    </body>
+<div style="font-size: 13px;margin: 10px 5px">
+    <form action="/shop/index.php/Back/Goods/updateGood/goods_id/10" method="post" enctype="multipart/form-data">
+        <table border="1" width="100%" class="table_a">
+            <!-- 传入id 方便保存-->
+            <input type="hidden" name="goods_id" value="<?php echo ($goods_info["goods_id"]); ?>"/>
+            <tr>
+                <td>商品名称</td>
+                <td><input type="text" name="goods_name" value="<?php echo ($goods_info["goods_name"]); ?>"/></td>
+            </tr>
+            <tr>
+                <td>商品价格</td>
+                <td><input type="text" name="goods_price" value="<?php echo ($goods_info["goods_price"]); ?>"/></td>
+            </tr>
+            <tr>
+                <td>商品图片</td>
+                <td>
+                    <notempty name="<?php echo ($goods_info["goods_big_small"]); ?>">
+                        <img src="<?php echo (C("SHOP_URL")); echo ($goods_info["goods_big_small"]); ?>" alt="图片"/>
+                        <notempty>
+                            <input type="file" name="goods_big_upd"/>
+                </td>
+            </tr>
+            <tr>
+                <td>商品详细描述</td>
+                <td>
+                    <textarea name="goods_introduce" id="goods_introduce"
+                              style="width: 730px;height: 380px; "> <?php echo ($goods_info["goods_introduce"]); ?></textarea>
+                </td>
+            </tr>
+            <script type="text/javascript">
+                var ue = UE.getEditor('goods_introduce');
+            </script>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="确认修改">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
 </html>

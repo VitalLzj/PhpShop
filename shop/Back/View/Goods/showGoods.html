@@ -6,6 +6,9 @@
     <title>会员列表</title>
 
     <link href="{$Think.config.BACK_CSS_URL}mine.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="{$Think.config.COMMON_URL}Js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="{$Think.config.LAYER_URL}layer.js"></script>
+
 </head>
 <body>
 <style>
@@ -45,20 +48,41 @@
             <!--<td>图片</td>-->
             <!--<td>缩略图</td>-->
             <!--<td>品牌</td>-->
-            <td>创建时间</td>
+            <td>商品图片</td>
             <td align="center">操作</td>
         </tr>
         <foreach name='info' item='v'>
-            <tr id="product1">
+            <tr id="product{$v.goods_id}">
                 <td>{$v.goods_id}</td>
                 <td><a href="#">{$v.goods_name}</a></td>
                 <td>{$v.goods_price}</td>
                 <td>{$v.goods_introduce|htmlspecialchars_decode}</td>
-                <td>{$v.add_time}</td>
-                <td><a href="__CONTROLLER__/updateGood">修改</a></td>
-                <td><a href="javascript:;" onclick="delete_product(1)">删除</a></td>
+                <td><img src="{$Think.config.SHOP_URL}{$v.goods_big_small}" alt="暂无图片"/></td>
+                <td><a href="__CONTROLLER__/updateGood/goods_id/{$v.goods_id}">修改</a></td>
+                <td><a onclick="delete_good({$v.goods_id})" style="cursor: pointer">删除</a></td>
             </tr>
         </foreach>
+        <script type="text/javascript">
+            function delete_good(good_id) {
+
+                layer.confirm('您真的要删除么？', {
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    $.ajax(
+                        {
+                            url: "{:U('delGood')}",
+                            data: {'goods_id': good_id},
+                            type: "get",
+                            success: function (msg) {
+                                $('#product' + good_id).remove();
+                                layer.msg('删除成功', {icon: 1});
+                            }
+                        }
+                    );
+                });
+
+            }
+        </script>
         <!--<tr id="product2">-->
         <!--<td>2</td>-->
         <!--<td><a href="#">苹果（APPLE）iPhone 4</a></td>-->
@@ -97,7 +121,7 @@
         <!--</tr>-->
         <tr>
             <td colspan="20" style="text-align: center;">
-                [1]
+                {$pagelist}
             </td>
         </tr>
         </tbody>

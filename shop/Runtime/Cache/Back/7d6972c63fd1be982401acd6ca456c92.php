@@ -22,7 +22,9 @@
 </div>
 <div></div>
 
+<script type="text/javascript" src="<?php echo (C("COMMON_URL")); ?>Js/jquery-1.11.3.min.js">
 
+</script>
 <script type="text/javascript">
     //加载事件里边定义click事件
     $(function () {
@@ -120,16 +122,15 @@
                 <td>商品价格</td>
                 <td><input type="text" name="goods_price"/></td>
             </tr>
+            <tr>
+                <td>商品logo图片</td>
+                <td><input type="file" name="goods_big_logo"/></td>
+            </tr>
             <!--<tr>-->
             <!--<td>商品图片</td>-->
             <!--<td><input type="file" name="f_goods_image"/></td>-->
             <!--</tr>-->
 
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="添加">
-                </td>
-            </tr>
         </table>
         <table border="1" width="100%" class="table_a" id="detail-tab-tb" style="display: none;">
             <tr>
@@ -159,6 +160,13 @@
             <tr>
                 <td>商品相册</td>
                 <td></td>
+            </tr>
+        </table>
+        <table style="width: 100%;">
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="添加">
+                </td>
             </tr>
         </table>
     </form>

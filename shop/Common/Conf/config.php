@@ -10,6 +10,12 @@ return array(
     'BACK_IMG_URL' => '/shop/Back/Public/img/',
     //富文本编辑器插件
     'PLUGIN_URL' => '/shop/Plugin/',
+    //Common路径
+    'COMMON_URL'=>'/shop/Common/',
+    //服务器路径
+    'SHOP_URL'=>'http://localhost/shop/',
+    //layer路径
+    'LAYER_URL'=>'/shop/Common/layer/',
 
     /* 数据库设置 */
     'DB_TYPE' => 'mysql',     // 数据库类型
