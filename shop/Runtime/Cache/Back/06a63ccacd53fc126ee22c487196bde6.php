@@ -7,6 +7,40 @@
     <title>用户登录</title>
 
     <link href="<?php echo (C("BACK_CSS_URL")); ?>User_Login.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="<?php echo (C("COMMON_URL")); ?>Js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+        //验证码是否正确
+        var is_right = false;
+        function checkInput() {
+            var code = $("#captcha").val();
+            if (code.length == 4) {
+                $.ajax({
+                    url: "<?php echo U('checkVerify');?>",
+                    data: {'code': code},
+                    dataType: 'json',
+                    type: "get",
+                    success: function (msg) {
+                        if (msg.status == 1) {
+                            $("#warn").html("<font color='green'>验证成功</font>");
+                            is_right = true;
+                        } else {
+                            $("#warn").html("<font color='red'>验证失败</font>");
+                            is_right = false;
+                        }
+                    }
+                });
+            }
+        }
+        $(function () {
+            $('form').submit(function (evt) {
+                if (!is_right) {
+                    evt.preventDefault();
+                }
+            });
+        });
+
+    </script>
+
 </head>
 <body id="userlogin_body">
 <div></div>
@@ -40,11 +74,16 @@
                             <ul>
                                 <li class="user_main_text">验证码：</li>
                                 <li class="user_main_input">
-                                    <input class="TxtValidateCodeCssClass" id="captcha" name="captcha" type="text">
-                                    <img src="<?php echo (C("BACK_IMG_URL")); ?>admin.png" alt=""/>
+                                    <input class="TxtValidateCodeCssClass" id="captcha" name="captcha" type="text"
+                                           maxlength="4" onkeyup="checkInput()">
+                                    <img src="<?php echo U('verifyImg');?>"
+                                         onclick="this.src='/shop/index.php/Back/Admin/verifyImg/'+Math.random()" alt=""/>
                                 </li>
                             </ul>
+                            <ul>
+                                <span id="warn"></span></ul>
                         </div>
+
                     </li>
                     <li class="user_main_r">
 
